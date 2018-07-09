@@ -7,20 +7,12 @@ import * as actions from '../Actions';
 
 class ListItem extends Component {
     selectedItem() {
-        const selected = this.props.selectedLibraryId;
-        const { id, title, description } = this.props.library.item;
+        const selected = this.props.selected;
+        const { title, description } = this.props.library.item;
 
-        if (selected === null || id !== selected) {
+        if (selected) {
             return (
                 <View>
-                    <CardSection extraStyles={styles.headerSectionStyles}>
-                        <Text style={styles.Header}>{title}</ Text>
-                    </CardSection>
-                </View>
-            );
-        } 
-        return (
-            <View>
                 <CardSection extraStyles={styles.headerSectionStyles}>
                         <Text style={styles.Header}>{title}</ Text>
                 </CardSection>
@@ -28,6 +20,14 @@ class ListItem extends Component {
                     <Text style={styles.descText}>{description}</Text>
                 </CardSection>
             </ View>
+            );
+        } 
+        return (
+            <View>
+                <CardSection extraStyles={styles.headerSectionStyles}>
+                    <Text style={styles.Header}>{title}</ Text>
+                </CardSection>
+            </View>
         );
     }
 
@@ -57,8 +57,9 @@ const styles = {
 
 };
 
-const mapStateToProps = state => {
-    return { selectedLibraryId: state.selectedLibraryID };
+const mapStateToProps = (state, ownProps) => {
+    const selected = state.selectedLibraryID === ownProps.library.item.id;
+    return { selected };
 };
 
 export default connect(mapStateToProps, actions)(ListItem);
