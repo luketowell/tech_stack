@@ -1,4 +1,8 @@
 export default (state, action) => {
-    console.log('fired', action);
-    return null;
+    switch (action.type) {
+        case 'select_library' : 
+            return action.payload;
+        default:
+            return null;
+    }
 };
