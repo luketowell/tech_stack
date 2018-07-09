@@ -1,20 +1,44 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { connect } from 'react-redux';
 import { CardSection } from './common';
+import * as actions from '../Actions';
 
 
 class ListItem extends Component {
-    render() {
-        console.log(this.props);
+    selectedItem() {
+        const selected = this.props.selectedLibraryId;
+        const { id, title, description } = this.props.library.item;
+
+        if (selected === null || id !== selected) {
+            return (
+                <View>
+                    <CardSection extraStyles={styles.headerSectionStyles}>
+                        <Text style={styles.Header}>{title}</ Text>
+                    </CardSection>
+                </View>
+            );
+        } 
         return (
             <View>
                 <CardSection extraStyles={styles.headerSectionStyles}>
-                    <Text style={styles.Header}>{this.props.library.item.title}</ Text>
+                        <Text style={styles.Header}>{title}</ Text>
                 </CardSection>
                 <CardSection>
-                    <Text style={styles.descText}>{this.props.library.item.description}</Text>
-                </ CardSection>
-            </View>
+                    <Text style={styles.descText}>{description}</Text>
+                </CardSection>
+            </ View>
+        );
+    }
+
+    render() {
+        console.log(this.props);
+        const { id } = this.props.library.item;
+        
+        return (
+            <TouchableWithoutFeedback onPress={() => this.props.selectLibrary(id)}>
+                    {this.selectedItem()} 
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -33,4 +57,8 @@ const styles = {
 
 };
 
-export default ListItem;
+const mapStateToProps = state => {
+    return { selectedLibraryId: state.selectedLibraryID };
+};
+
+export default connect(mapStateToProps, actions)(ListItem);
