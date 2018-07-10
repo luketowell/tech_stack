@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, LayoutAnimation } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection } from './common';
 import * as actions from '../Actions';
 
 
 class ListItem extends Component {
+
+    componentWillUpdate() {
+        LayoutAnimation.easeInEaseOut();
+    }
     selectedItem() {
         const selected = this.props.selected;
         const { title, description } = this.props.library.item;
