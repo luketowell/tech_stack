@@ -7,7 +7,7 @@ import { Text, View } from 'react-native';
 const Header = (props) => {
     return (
         <View style={styles.viewStyle}>
-            <Text style={styles.textStyle}>{props.headerText}</Text>;
+            <Text style={styles.textStyle}>{props.headerText}</Text>
         </View>
     );
 };
